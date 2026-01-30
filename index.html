@@ -1,0 +1,29 @@
+HI
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+<script>
+  // 初始化 LIFF
+  liff.init({ liffId: "您的_LIFF_ID" })
+    .then(() => {
+      if (liff.isLoggedIn()) {
+        // 取得使用者資料
+        liff.getProfile()
+          .then(profile => {
+            const name = profile.displayName;
+            const userId = profile.userId;
+            
+            // 自動填入表單 (假設 input id 為 userName 與 userId)
+            document.getElementById('userName').value = name;
+            document.getElementById('userId').value = userId;
+          })
+          .catch((err) => {
+            console.error('取得資料失敗', err);
+          });
+      } else {
+        liff.login(); // 若未登入則引導登入
+      }
+    })
+    .catch((err) => {
+      console.error('LIFF 初始化失敗', err);
+    });
+</script>
